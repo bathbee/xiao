@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>母亲节倒计时和轮播图</title>
+    <style>
+        #countdown {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #countdown-timer {
+            font-size: 50px;
+            margin-top: 20px;
+        }
+
+        #countdown-timer span {
+            padding: 10px;
+            background-color: #f7f7f7;
+            margin-right: 10px;
+            border-radius: 5px;
+        }
+
+        /* 轮播图样式 */
+        #slideshow {
+            margin-top: 50px;
+            position: relative;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        #slideshow img {
+            width: 100%;
+            height: auto;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="countdown">
+        <h1>距离母亲节还有</h1>
+        <div id="countdown-timer">
+            <span id="days"></span>
+            <span id="hours"></span>
+            <span id="minutes"></span>
+            <span id="seconds"></span>
+        </div>
+    </div>
+    <div id="slideshow">
+        <img src="./images/woof.jpg" alt="Slide 1">
+        <img src="./images/1efbe1b1c5027a1ee971eec9380c64e47c3c279f.jpg@518w.webp" alt="Slide 2">
+        <img src="./images/chen.png" alt="Slide 3">
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+    <script>
+        // 母亲节倒计时
+        const countdown = () => {
+            const now = new Date();
+            const mothersDay = new Date(now.getFullYear(), 4, 9); // 母亲节日期，这里设为每年的5月9日
+            if (now.getMonth() == 4 && now.getDate() > 9) {
+                mothersDay.setFullYear(mothersDay.getFullYear() + 1);
+            }
+            const timeLeft = mothersDay.getTime() - now.getTime();
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            document.getElementById("days").innerHTML = days + "天";
+            document.getElementById("hours").innerHTML = hours + "小时";
+            document.getElementById("minutes").innerHTML = minutes + "分钟";
+            document.getElementById("seconds").innerHTML = seconds + "秒";
+        };
+
+        // 轮播图
+        let slideIndex = 0;
+        const showSlides = () => {
+            const slides = document.getElementById("slideshow").getElementsByTagName("img");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+            slides[slideIndex - 1].style.display = "block";
+            setTimeout(showSlides, 3000); // 切换时间间隔，这里设为3秒
+
+        };
+
+
+        // 启动倒计时和轮播图
+        countdown();
+        showSlides();
+
+    </script>
+</body>
+
+</html>
